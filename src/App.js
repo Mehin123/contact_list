@@ -1,26 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-
+import ContactProvider from './contexts/ValueProvider';
+import Contacts from './Contacts'
+import {BrowserRouter} from 'react-router-dom';
+import {Route, Switch}  from 'react-router-dom'
+import BrowseContact from './BrowseContact'
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+    <ContactProvider>
+    <Switch>
+    <Route exact path="/">
+    <Contacts/>
+    </Route>
+    <Route exact path="/:id">
+    <BrowseContact/>
+    </Route>
+    </Switch>
+   </ContactProvider>
+  </BrowserRouter>
+   );
 }
 
 export default App;
