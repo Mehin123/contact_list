@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -8,7 +8,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import useInputState from './hooks/useInputHooks';
 import { ContactContext } from './contexts/ValueProvider';
-
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
@@ -25,13 +26,18 @@ const useStyles = makeStyles(() => ({
   },
   button: {
     padding: '20px',
+    margin:'3px'
   },
   avatar: {
     margin: ' 0 auto',
   },
+  homeButton:{
+    marginTop:"10px",
+  }
 }));
 export default function BrowseContact() {
   const params = useParams();
+  const history=useHistory();
   const classes = useStyles();
   const { contacts, edit, setEdit, handleRemove, updateContact } = useContext(ContactContext);
   const index = contacts.findIndex((contact) => contact.id == params.id);
@@ -94,19 +100,23 @@ export default function BrowseContact() {
         <div className={classes.button}>
           <Button color="secondary" variant="outlined" onClick={handleRemove(myId)}>Remove</Button>
           <Button color="primary" variant="outlined" onClick={handleEdit}>Edit</Button>
-        </div>
-        <small>
-          <strong>Created Time :</strong>
-          {' '}
-          {contacts[index].lastModifiedDate}
-        </small>
-        <small>
-          {' '}
-          <strong>Last Modified Date :</strong>
-          {' '}
-          {contacts[index].lastModifiedDate}
-          {' '}
-        </small>
+       </div>
+       <small>
+       <strong>Created Time :</strong>
+       {' '}
+       {contacts[index].lastModifiedDate}
+     </small>
+     <small>
+       {' '}
+       <strong>Last Modified Date :</strong>
+       {' '}
+       {contacts[index].lastModifiedDate}
+       {' '}
+     </small>
+       <div className={classes.homeButton}>
+       <Button size="large" onClick={()=>history.push("/")}  variant="outlined"> <FontAwesomeIcon icon={faArrowLeft}/></Button></div>
+  
+      
       </Paper>
     </div>
   );
