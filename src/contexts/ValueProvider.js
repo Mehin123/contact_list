@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import avatar from '../images/avatar.png';
+import useInputState from '../hooks/useInputHooks';
 
 const initialContacts = [{
   id: 0,
@@ -12,7 +12,6 @@ const initialContacts = [{
   workPhone: `070 ${811} ${37} ${52}`,
   createdDate: '08.07.2020',
   lastModifiedDate: '09.07.2020',
-  image: avatar,
 }, {
   id: 1,
   firstName: 'Fidan',
@@ -22,7 +21,6 @@ const initialContacts = [{
   workPhone: `070 ${811} ${37} ${52}`,
   createdDate: '08.07.2020',
   lastModifiedDate: '09.07.2020',
-  image: avatar,
 },
 {
   id: 2,
@@ -33,7 +31,6 @@ const initialContacts = [{
   workPhone: `070 ${811} ${37} ${56}`,
   createdDate: '08.07.2020',
   lastModifiedDate: '09.07.2020',
-  image: avatar,
 },
 {
   id: 3,
@@ -44,7 +41,6 @@ const initialContacts = [{
   workPhone: `070 ${811} ${37} ${59}`,
   createdDate: '08.07.2020',
   lastModifiedDate: '09.07.2020',
-  image: avatar,
 },
 {
   id: 4,
@@ -55,7 +51,6 @@ const initialContacts = [{
   workPhone: `070 ${811} ${37} ${57}`,
   createdDate: '08.07.2020',
   lastModifiedDate: '09.07.2020',
-  image: avatar,
 },
 {
   id: 5,
@@ -66,7 +61,6 @@ const initialContacts = [{
   workPhone: `070 ${811} ${37} ${57}`,
   createdDate: '08.07.2020',
   lastModifiedDate: '09.07.2020',
-  image: avatar,
 },
 {
   id: 6,
@@ -77,7 +71,6 @@ const initialContacts = [{
   workPhone: `070 ${811} ${37} ${57}`,
   createdDate: '08.07.2020',
   lastModifiedDate: '09.07.2020',
-  image: avatar,
 },
 {
   id: 7,
@@ -88,8 +81,14 @@ const initialContacts = [{
   workPhone: `070 ${811} ${37} ${57}`,
   createdDate: '08.07.2020',
   lastModifiedDate: '09.07.2020',
-  image: avatar,
 }];
+const initialValue=[{
+  firstName:'',
+  lastName:'',
+  homePhone:``,
+  mobilePhone:``,
+  workPhone:``,
+}]
 export const ContactContext = createContext();
 const ContactProvider = ({ children }) => {
   ContactProvider.propTypes = {
@@ -98,6 +97,7 @@ const ContactProvider = ({ children }) => {
 
   const history = useHistory();
   const [contacts, setContacts] = useState(initialContacts);
+  const [handleValue, handleChange,handleChangeNumber,reset]=useInputState(initialValue);
   const [edit, setEdit] = useState(false);
 
   const handleRemove = (id) => () => {
@@ -114,7 +114,7 @@ const ContactProvider = ({ children }) => {
 
   return (
     <ContactContext.Provider value={{
-      contacts, setContacts, edit, setEdit, handleRemove, updateContact,
+      contacts, setContacts, edit, setEdit, handleRemove, updateContact,handleValue,handleChange,handleChangeNumber,reset
     }}
     >
       {children}

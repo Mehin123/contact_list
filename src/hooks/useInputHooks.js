@@ -10,6 +10,15 @@ export default function useInputState(initial) {
       [name]: value,
     });
   };
- 
-  return [state, handleChange];
+  const handleChangeNumber = (e) => {
+    const { value, name } = e.target;
+    setState({
+      ...state,
+      [name]: parseInt((value),10),
+    });
+  };
+  const reset = ()=>{
+    setState('')
+  }
+  return [state, handleChange, handleChangeNumber,reset];
 }
